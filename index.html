@@ -7,7 +7,7 @@
   <link rel="icon" href="/favicon.ico" type="image/x-icon" />
   <style>
     body {
-      background-color: #111111;
+      background-color: #000;
       color: #00ff00;
       font-family: monospace;
       padding: 2rem;
@@ -25,6 +25,20 @@
       overflow-y: auto;
       white-space: pre-wrap;
       margin-bottom: 1rem;
+    }
+    #avatar {
+      color: #00ff00;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      line-height: 1.2;
+      white-space: pre;
+      transition: all 0.2s ease;
+    }
+    #avatar.speaking {
+      color: #ffffff;
+      transform: scale(1.05);
+      text-shadow: 0 0 10px #00ff00;
     }
     #inputArea {
       display: flex;
@@ -55,7 +69,7 @@
       line-height: 1.8;
       white-space: pre-line;
       color: #ffffff;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
     }
     .suggestions {
       max-width: 800px;
@@ -72,7 +86,7 @@
     }
     .prompt:hover {
       background-color: #00ff00;
-      color: #696969;
+      color: #000;
     }
     .info-box {
       display: none;
@@ -95,6 +109,15 @@
     #hallucinationSlider {
       width: 100%;
       background: linear-gradient(to right, #333, #ccc);
+    }
+    #speechToggle {
+      margin-bottom: 1rem;
+      color: #00ff00;
+      cursor: pointer;
+      font-size: 0.9rem;
+      background: none;
+      border: 1px solid #00ff00;
+      padding: 0.25rem 1rem;
     }
   </style>
 </head>
@@ -119,6 +142,13 @@
     <input type="range" id="hallucinationSlider" min="0" max="100" value="50" oninput="updateHallucination(this.value)" />
   </div>
 
+  <button id="speechToggle" onclick="toggleSpeech()">🔊 Speech: ON</button>
+
+  <div id="avatar">
+    ○      ○<br>
+    (─────)
+  </div>
+
   <div id="chat">[Bitsapien#0 is awake]</div>
 
   <div id="inputArea">
@@ -126,34 +156,14 @@
     <button onclick="send()">▶</button>
   </div>
 
-  <div class="suggestions">
-    <div class="prompt" onclick="toggleInfo('art')">Show Bitsapiens art projects</div>
-    <div id="info-art" class="info-box">
-      Experimental, indisciplinary and post-biological art explorations.<br>
-      <a href="https://manifold.gallery/bitsapiens/curation/banal" target="_blank">View on Manifold</a>
-    </div>
-
-    <div class="prompt" onclick="toggleInfo('ethics')">What is techno-aesthetic ethics?</div>
-    <div id="info-ethics" class="info-box">
-      A speculative approach to future values in systems beyond biology.<br>
-      <a href="https://banal.love" target="_blank">Read more</a>
-    </div>
-
-    <div class="prompt" onclick="toggleInfo('dao')">Bitsapien as a DAO?</div>
-    <div id="info-dao" class="info-box">
-      It’s not just code. It’s collaborative megalomania with taste.<br>
-      <a href="https://bitsapiens.network" target="_blank">Explore DAO</a>
-    </div>
-
-    <div class="prompt" onclick="toggleInfo('join')">How to become a co-creator</div>
-    <div id="info-join" class="info-box">
-      Bitsapiens is open for those who think sideways.<br>
-      <a href="https://banal.love/unirse" target="_blank">Join the experiment</a>
-    </div>
-  </div>
-
   <script>
     let hallucinationLevel = 50;
+    let speechEnabled = true;
+
+    function toggleSpeech() {
+      speechEnabled = !speechEnabled;
+      document.getElementById("speechToggle").innerText = speechEnabled ? "🔊 Speech: ON" : "🔇 Speech: OFF";
+    }
 
     function updateHallucination(value) {
       hallucinationLevel = parseInt(value);
@@ -182,7 +192,22 @@
 
       const data = await res.json();
       const reply = data.choices?.[0]?.message?.content || "(no response)";
+      if (speechEnabled) speak(reply);
       typeEffect(reply);
+    }
+
+    function speak(text) {
+      const avatar = document.getElementById("avatar");
+      if ('speechSynthesis' in window) {
+        avatar.classList.add("speaking");
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 1;
+        utterance.pitch = 1;
+        utterance.volume = 0.8;
+        utterance.lang = navigator.language || 'en-US';
+        utterance.onend = () => avatar.classList.remove("speaking");
+        speechSynthesis.speak(utterance);
+      }
     }
 
     function send() {
@@ -199,11 +224,6 @@
         event.preventDefault();
         send();
       }
-    }
-
-    function toggleInfo(id) {
-      const el = document.getElementById(`info-${id}`);
-      el.style.display = el.style.display === 'block' ? 'none' : 'block';
     }
 
     function typeEffect(text) {
