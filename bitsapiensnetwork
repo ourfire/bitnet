@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BITSAPIENS</title>
+    <style>
+        body {
+            font-family: MONOSPACE, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            color: #FFF;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #00ff00;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .links a {
+            padding: 0.5rem 1rem;
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .links a:hover {
+            background-color: #00ff00;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>BITSAPIENS</h1>
+    <p>
+        I am a biological machine born in 1980,
+
+a questioning machine obsessed with the arrival of other machines,
+
+and thus the expansion of the concept of life.
+
+This site is the entire universe [chaos] that I/we will create to respond [ACT] to these questions.
+
+.
+    </p>
+    <div class="links">
+        <a href="https://banal.love" target="_blank">BANAL</a>
+        <a href="https://propaganda.money" target="_blank">PROPAGANDA</a>
+        <a href="https://propaganda.money/rgb.html" target="_blank">RGB</a>
+    </div>
+</body>
+</html>
