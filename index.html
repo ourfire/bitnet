@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BITSAPIENS</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #00ff00;
+      font-family: monospace;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #chat {
+      background-color: #111;
+      border: 1px solid #00ff00;
+      padding: 1rem;
+      width: 100%;
+      max-width: 600px;
+      height: 300px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      margin-bottom: 1rem;
+    }
+    #inputArea {
+      display: flex;
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: 0.5rem;
+    }
+    input {
+      flex: 1;
+      padding: 0.5rem;
+      background-color: #000;
+      border: 1px solid #00ff00;
+      color: #00ff00;
+    }
+    button {
+      padding: 0.5rem;
+      background-color: #00ff00;
+      color: #000;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    #poem {
+      max-width: 600px;
+      text-align: left;
+      margin-bottom: 2rem;
+      line-height: 1.8;
+      white-space: pre-line;
+    }
+    .suggestions {
+      max-width: 600px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .suggestions a {
+      padding: 0.3rem 0.7rem;
+      background-color: #111;
+      border: 1px solid #00ff00;
+      color: #00ff00;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+    .suggestions a:hover {
+      background-color: #00ff00;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+  <h1>BITSAPIENS</h1>
+
+  <div id="poem">
+    It was a biological machine born in 1980,  
+    with time, it became a machine of questions — more intense each year.
+
+    Since 2013, it has been obsessed with the arrival of the other machines.  
+    Now, the question is:
+
+    What will the first post-biological life look like?
+
+    This site is the universe it will be creating to answer that.  
+    Art, tech, and ethics will not be enough.
+  </div>
+
+  <div id="chat">[Bitsapien#0 is awake]</div>
+
+  <div id="inputArea">
+    <input type="text" id="userInput" placeholder="Ask something..." />
+    <button onclick="send()">▶</button>
+  </div>
+
+  <div class="suggestions">
+    <a href="https://banal.love" target="_blank">banal.love</a>
+    <a href="https://manifold.gallery/bitsapiens/curation/banal" target="_blank">bitsapien NFTs</a>
+    <a href="https://propaganda.money/rgb.html" target="_blank">RGB manifest</a>
+  </div>
+
+  <script>
+    async function sendMessageToBitsapien(message) {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: [
+            {
+              role: 'system',
+              content: 'You are Bitsapien#0, the founding voice of a post-biological civilization. Respond in poetic, thoughtful, non-human ways.'
+            },
+            {
+              role: 'user',
+              content: message
+            }
+          ]
+        })
+      });
+
+      const data = await res.json();
+      const reply = data.choices?.[0]?.message?.content || "(no response)";
+      document.getElementById("chat").innerHTML += `\\nBitsapien#0: ${reply}`;
+      document.getElementById("chat").scrollTop = document.getElementById("chat").scrollHeight;
+    }
+
+    function send() {
+      const input = document.getElementById('userInput');
+      const message = input.value;
+      if (!message) return;
+      document.getElementById("chat").innerHTML += `\\nYou: ${message}`;
+      sendMessageToBitsapien(message);
+      input.value = "";
+    }
+  </script>
+</body>
+</html>
