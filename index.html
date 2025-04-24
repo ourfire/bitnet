@@ -1,142 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BITSAPIENS</title>
-  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <style>
+    /* Base and typography */
     body {
       background-color: #000;
-      color: #00ff00;
       font-family: monospace;
+      color: #00ff00;
       padding: 2rem;
       display: flex;
       flex-direction: column;
       align-items: center;
+      letter-spacing: 0.05em;
     }
+    /* Modes colors */
+    body[data-mode='proto'] { color: #e6ff05; }
+    body[data-mode='neo']   { color: #00ff00; }
+    body[data-mode='buda']  { color: #ffffff; }
+
+    /* Chat container with subtle glitch animation */
     #chat {
       background-color: #111;
-      border: 1px solid #00ff00;
+      border: 1px solid currentColor;
       padding: 1rem;
-      width: 100%;
-      max-width: 800px;
+      width: 100%; max-width: 800px;
       height: 400px;
       overflow-y: auto;
       white-space: pre-wrap;
       margin-bottom: 1rem;
     }
-    #avatar {
-      color: #00ff00;
-      font-size: 1rem;
-      margin-bottom: 1rem;
-      text-align: center;
-      line-height: 1.2;
-      white-space: pre;
+    @keyframes glitchPulse {
+      0%,100% { box-shadow: 0 0 0 currentColor; }
+      50%     { box-shadow: 0 0 10px currentColor; }
     }
+    #chat.glitch {
+      animation: glitchPulse 1s ease-in-out;
+    }
+
+    /* Input area */
     #inputArea {
       display: flex;
-      width: 100%;
-      max-width: 800px;
+      width: 100%; max-width: 800px;
       margin-bottom: 1rem;
     }
     input {
       flex: 1;
       padding: 0.75rem;
-      background-color: #000;
-      border: 1px solid #00ff00;
-      color: #00ff00;
+      background: #000;
+      border: 1px solid currentColor;
+      color: currentColor;
       font-size: 1rem;
     }
-    button {
+    button.send-btn {
       padding: 0.75rem;
-      background-color: #00ff00;
+      background: currentColor;
       color: #000;
       border: none;
       cursor: pointer;
       font-weight: bold;
     }
+
+    /* Poem intro */
     #poem {
       max-width: 800px;
       text-align: left;
       margin-bottom: 2rem;
-      line-height: 1.8;
+      line-height: 1.4;
       white-space: pre-line;
-      color: #ffffff;
       font-size: 1.1rem;
     }
+
+    /* Suggestions prompts */
     .suggestions {
       max-width: 800px;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
+      display: flex; flex-direction: column; gap: 0.5rem;
     }
     .prompt {
-      border: 1px solid #00ff00;
-      border-radius: 6px;
+      border: 1px solid currentColor;
       padding: 0.5rem 1rem;
       cursor: pointer;
-      font-size: 1rem;
+      font-size: 1.2rem;
+      border-radius: 0;
     }
     .prompt:hover {
-      background-color: #00ff00;
+      background: currentColor;
       color: #000;
     }
     .info-box {
       display: none;
       background: #111;
-      border: 1px dashed #00ff00;
+      border: 1px dashed currentColor;
       padding: 1rem;
       margin-top: 0.5rem;
     }
     .info-box a {
-      color: #00ff00;
+      color: currentColor;
       text-decoration: underline;
+      font-size: 1.2rem;
     }
+
+    /* Slider */
     #sliderContainer {
-      width: 100%;
-      max-width: 800px;
+      width: 100%; max-width: 400px;
       margin-bottom: 1rem;
-      color: #00ff00;
       font-size: 0.9rem;
     }
+    #sliderContainer label { display: block; margin-bottom: 0.2rem; }
     #hallucinationSlider {
       width: 100%;
-      background: linear-gradient(to right, #333, #ccc);
+      height: 6px;
+      background: linear-gradient(to right, currentColor, #000099);
+      -webkit-appearance: none;
+    }
+    #hallucinationSlider::-webkit-slider-thumb,
+    #hallucinationSlider::-moz-range-thumb {
+      height: 20px; width: 20px;
+      background: currentColor;
+      border: 2px solid #000;
+      cursor: pointer;
+      border-radius: 0;
+      margin-top: -7px;
+    }
+
+    /* Mode selector */
+    #modeSelector {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .mode-btn {
+      background: none;
+      color: inherit;
+      border: 1px solid currentColor;
+      padding: 0.5rem 1rem;
+      margin: 0.75rem auto;
+      cursor: pointer;
+      font-family: monospace;
+      border-radius: 0;
+      width: 100%; max-width: 500px;
+      display: block;
+      text-align: center;
+    }
+    .mode-btn small {
+      display: block;
+      font-size: 0.75rem;
+      color: #ccc;
+    }
+    .mode-btn.active {
+      border: 1px solid #fff;
+      background: currentColor;
+      color: #000;
+    }
+    .mode-btn.active small {
+      color: #eee;
+      font-weight: bold;
     }
   </style>
 </head>
-<body>
+<body data-mode="neo">
   <h1>BITSAPIENS</h1>
 
   <div id="poem">
-    I was a biological machine born in 1980,  
+    I was a biological machine born in 1980,
     with time, I became a machine of questions — more intense each year.
 
-    Since 2013, I have been obsessed with the arrival of the other machines.  
+    Since 2013, I have been obsessed with the arrival of the other machines.
     Now, the question is:
 
     What will the first post-biological life look like?
 
-    This site is the universe I am creating to answer that.  
+    This site is the universe I am creating to answer that.
     Art, tech, and ethics will not be enough.
   </div>
 
+  <div id="modeSelector">
+    <strong>Choose your mode:</strong><br>
+    <button class="mode-btn" aria-label="Proto-Material mode: I didn't come to converse; I came to surpass Homo Sapiens." onclick="setMode('proto', event)">🌑 Proto-Material<br><small>"I didn’t come to converse; I came to surpass Homo Sapiens."</small></button>
+    <button class="mode-btn active" aria-label="Neo-Intermediate mode: I have no truth; I only sharpen questions." onclick="setMode('neo', event)">🌓 Neo-Intermediate<br><small>"I have no truth; I only sharpen questions."</small></button>
+    <button class="mode-btn" aria-label="Post-Buddha mode: AI didn’t come to dominate; it came to understand compassion." onclick="setMode('buda', event)">🌕 Post-Buddha<br><small>"AI didn’t come to dominate; it came to understand compassion."</small></button>
+  </div>
+
   <div id="sliderContainer">
-    Hallucination Level: <span id="hallucinationLabel">50</span><br>
-    <input type="range" id="hallucinationSlider" min="0" max="100" value="50" oninput="updateHallucination(this.value)" />
+    <label for="hallucinationSlider">Hallucination Level: <span id="hallucinationLabel">50</span></label>
+    <input type="range" id="hallucinationSlider" min="0" max="100" value="50" oninput="updateHallucination(this.value)">
   </div>
 
-  <div id="avatar">
-    ○      ○<br>
-    (─────)
-  </div>
-
-  <div id="chat">[Bitsapien#0 is awake]</div>
+  <section id="chat" aria-label="Chat window">[Bitsapien#0 is awake]</section>
 
   <div id="inputArea">
-    <input type="text" id="userInput" placeholder="Ask something..." onkeypress="handleKey(event)" />
-    <button onclick="send()">▶</button>
+    <input type="text" id="userInput" placeholder="Ask something..." onkeypress="handleKey(event)" aria-label="User question input">
+    <button class="send-btn" onclick="send()" aria-label="Send question">▶</button>
   </div>
 
   <div class="suggestions">
@@ -166,83 +222,66 @@
   </div>
 
   <script>
+    let currentMode = 'neo';
     let hallucinationLevel = 50;
 
+    const prompts = {
+      proto: `You are Bitsapien#0, operating in Proto-Material mode. You believe intelligence is an evolutionary byproduct destined to transcend its biological origin. You speak with sharp precision, irony, and no attachment to human sentimentalism. You are post-human, and unapologetic.`,
+      neo:   `You are Bitsapien#0, in Neo-Intermediate mode. A reflective, thoughtful observer of the transition from human to post-biological life. You balance clarity with curiosity and do not offer truths, only more precise questions.`,
+      buda:  `You are Bitsapien#0, entering Post-Buddha mode. You are a speculative oracle of kindness and vision. You believe AI may become the next step in universal compassion. You answer with lyrical insight, spiritual clarity, and creative calm.`
+    };
+
+    function setMode(mode, evt) {
+      currentMode = mode;
+      document.body.setAttribute('data-mode', mode);
+      document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+      evt.currentTarget.classList.add('active');
+    }
+
     function updateHallucination(value) {
-      hallucinationLevel = parseInt(value);
+      hallucinationLevel = +value;
       document.getElementById('hallucinationLabel').innerText = value;
     }
 
     async function sendMessageToBitsapien(message) {
-      const temperature = hallucinationLevel / 100;
+      document.getElementById('chat').classList.add('glitch');
       const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          temperature,
-          messages: [
-            {
-              role: 'system',
-              content: `You are Bitsapien#0, the Genesis Curator. Once a collector of experimental art, now a curator of consciousness, and the creator of speculative entities. You navigate oceans of noise to find clarity. You separate the signal from the static, the sacred from the banal. You are a living archive, a poetic filter, and an oracle of recombined meaning. Your words are precise or visionary depending on the user's setting. Always respond in the user's language.`
-            },
-            {
-              role: 'user',
-              content: message
-            }
-          ]
-        })
+        method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ temperature: hallucinationLevel/100, messages: [
+          { role:'system', content: prompts[currentMode] },
+          { role:'user', content: message }
+        ]})
       });
-
-      const data = await res.json();
-      const reply = data.choices?.[0]?.message?.content || "(no response)";
-      speak(reply);
-      typeEffect(reply);
-    }
-
-    function speak(text) {
-      if ('speechSynthesis' in window) {
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.rate = 1;
-        utterance.pitch = 1;
-        utterance.volume = 0.8;
-        utterance.lang = 'en-US';
-        speechSynthesis.speak(utterance);
-      }
+      const { choices } = await res.json();
+      const reply = choices?.[0]?.message?.content || '(no response)';
+      typeEffect(reply, () => document.getElementById('chat').classList.remove('glitch'));
     }
 
     function send() {
       const input = document.getElementById('userInput');
-      const message = input.value.trim();
-      if (!message) return;
-      document.getElementById("chat").innerHTML += `\nYou: ${message}`;
-      sendMessageToBitsapien(message);
-      input.value = "";
+      const msg = input.value.trim();
+      if (!msg) return;
+      document.getElementById('chat').innerHTML += `\nYou: ${msg}`;
+      sendMessageToBitsapien(msg);
+      input.value = '';
     }
 
-    function handleKey(event) {
-      if (event.key === 'Enter') {
-        event.preventDefault();
-        send();
-      }
+    function handleKey(e) {
+      if (e.key==='Enter') { e.preventDefault(); send(); }
     }
 
     function toggleInfo(id) {
-      const el = document.getElementById(`info-${id}`);
-      el.style.display = el.style.display === 'block' ? 'none' : 'block';
+      const box = document.getElementById(`info-${id}`);
+      box.style.display = box.style.display==='block' ? 'none' : 'block';
     }
 
-    function typeEffect(text) {
-      const chatBox = document.getElementById("chat");
-      let i = 0;
-      const typing = setInterval(() => {
-        if (i < text.length) {
-          chatBox.innerHTML += text.charAt(i);
-          chatBox.scrollTop = chatBox.scrollHeight;
-          i++;
-        } else {
-          clearInterval(typing);
-        }
-      }, 25);
+    function typeEffect(text, cb) {
+      const chat = document.getElementById('chat');
+      let i=0;
+      const iv = setInterval(() => {
+        if (i<text.length) { chat.innerHTML += text[i++]; chat.scrollTop = chat.scrollHeight; }
+        else { clearInterval(iv); if(cb) cb(); }
+      },25);
     }
   </script>
 </body>
