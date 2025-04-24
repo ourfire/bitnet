@@ -4,27 +4,92 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BITSAPIENS</title>
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico">
   <style>
     /* Base and typography */
     body {
       background-color: #000;
       font-family: monospace;
       color: #00ff00;
-      padding: 2rem;
+      padding: 0;
+      margin: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       letter-spacing: 0.05em;
     }
-    /* Modes colors */
+    
+    /* Mode colors */
     body[data-mode='proto'] { color: #e6ff05; }
     body[data-mode='neo']   { color: #00ff00; }
     body[data-mode='buda']  { color: #ffffff; }
 
-    /* Chat container with subtle glitch animation */
+    /* Fixed Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      border-bottom: 1px solid currentColor;
+    }
+    
+    .nav-container {
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 1rem;
+    }
+    
+    .nav-logo {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    .nav-links a {
+      color: currentColor;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: opacity 0.2s;
+    }
+    
+    .nav-links a:hover {
+      opacity: 0.7;
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: currentColor;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    
+    /* Main content */
+    main {
+      margin-top: 4rem;
+      padding: 2rem;
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Chat container with glitch pulse */
     #chat {
-      background-color: #111;
+      background: #111;
       border: 1px solid currentColor;
       padding: 1rem;
       width: 100%; max-width: 800px;
@@ -32,14 +97,15 @@
       overflow-y: auto;
       white-space: pre-wrap;
       margin-bottom: 1rem;
+      box-shadow: 0 0 5px rgba(0, 255, 0, 0.2);
     }
+    
     @keyframes glitchPulse {
       0%,100% { box-shadow: 0 0 0 currentColor; }
       50%     { box-shadow: 0 0 10px currentColor; }
     }
-    #chat.glitch {
-      animation: glitchPulse 1s ease-in-out;
-    }
+    
+    #chat.glitch { animation: glitchPulse 1s ease-in-out; }
 
     /* Input area */
     #inputArea {
@@ -47,24 +113,26 @@
       width: 100%; max-width: 800px;
       margin-bottom: 1rem;
     }
-    input {
+    
+    #userInput {
       flex: 1;
-      padding: 0.75rem;
       background: #000;
       border: 1px solid currentColor;
       color: currentColor;
+      padding: 0.75rem;
       font-size: 1rem;
     }
-    button.send-btn {
-      padding: 0.75rem;
+    
+    .send-btn {
       background: currentColor;
       color: #000;
       border: none;
+      padding: 0.75rem;
       cursor: pointer;
       font-weight: bold;
     }
 
-    /* Poem intro */
+    /* Intro poem */
     #poem {
       max-width: 800px;
       text-align: left;
@@ -74,22 +142,30 @@
       font-size: 1.1rem;
     }
 
-    /* Suggestions prompts */
+    /* Suggestions */
     .suggestions {
       max-width: 800px;
-      display: flex; flex-direction: column; gap: 0.5rem;
+      display: flex; 
+      flex-direction: column; 
+      gap: 0.5rem;
+      width: 100%;
     }
+    
     .prompt {
       border: 1px solid currentColor;
       padding: 0.5rem 1rem;
       cursor: pointer;
       font-size: 1.2rem;
       border-radius: 0;
+      background: transparent;
+      transition: all 0.2s;
     }
-    .prompt:hover {
-      background: currentColor;
-      color: #000;
+    
+    .prompt:hover { 
+      background: currentColor; 
+      color: #000; 
     }
+    
     .info-box {
       display: none;
       background: #111;
@@ -97,40 +173,81 @@
       padding: 1rem;
       margin-top: 0.5rem;
     }
-    .info-box a {
-      color: currentColor;
-      text-decoration: underline;
-      font-size: 1.2rem;
+    
+    .info-box a { 
+      color: currentColor; 
+      text-decoration: underline; 
+      font-size: 1.2rem; 
     }
 
-    /* Slider */
+    /* Slider aligned and smaller */
     #sliderContainer {
-      width: 100%; max-width: 400px;
-      margin-bottom: 1rem;
+      width: 60%; 
+      max-width: 500px;
+      margin: 1rem auto;
       font-size: 0.9rem;
     }
-    #sliderContainer label { display: block; margin-bottom: 0.2rem; }
+    
+    #sliderContainer label { 
+      display: block; 
+      margin-bottom: 0.2rem; 
+    }
+    
     #hallucinationSlider {
+      -webkit-appearance: none !important;
+      appearance: none !important;
       width: 100%;
       height: 6px;
-      background: linear-gradient(to right, currentColor, #000099);
-      -webkit-appearance: none;
+      background: linear-gradient(to right, currentColor, #333) !important;
+      border-radius: 5px;
+      margin: 0 auto;
+      outline: none;
     }
-    #hallucinationSlider::-webkit-slider-thumb,
-    #hallucinationSlider::-moz-range-thumb {
-      height: 20px; width: 20px;
-      background: currentColor;
-      border: 2px solid #000;
+    
+    /* Track styling for browsers */
+    #hallucinationSlider::-webkit-slider-runnable-track {
+      height: 6px;
+      background: linear-gradient(to right, currentColor, #333);
+      border: none;
+      border-radius: 5px;
+    }
+    
+    #hallucinationSlider::-moz-range-track {
+      height: 6px;
+      background: linear-gradient(to right, currentColor, #333);
+      border: none;
+      border-radius: 5px;
+    }
+    
+    /* Thumb styling - changed to green/match current color */
+    #hallucinationSlider::-webkit-slider-thumb {
+      -webkit-appearance: none !important;
+      appearance: none !important;
+      width: 16px;
+      height: 16px;
+      background: currentColor !important;
+      border: none;
       cursor: pointer;
-      border-radius: 0;
-      margin-top: -7px;
+      border-radius: 50%;
+      margin-top: -5px;
+    }
+    
+    #hallucinationSlider::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      background: currentColor !important;
+      border: none;
+      cursor: pointer;
+      border-radius: 50%;
     }
 
-    /* Mode selector */
-    #modeSelector {
-      text-align: center;
-      margin-bottom: 1.5rem;
+    #modeSelector { 
+      text-align: center; 
+      margin-bottom: 1.5rem; 
+      width: 100%;
+      max-width: 800px;
     }
+    
     .mode-btn {
       background: none;
       color: inherit;
@@ -138,151 +255,333 @@
       padding: 0.5rem 1rem;
       margin: 0.75rem auto;
       cursor: pointer;
+      width: 100%; 
+      max-width: 500px;
       font-family: monospace;
       border-radius: 0;
-      width: 100%; max-width: 500px;
       display: block;
       text-align: center;
+      transition: all 0.2s;
     }
-    .mode-btn small {
-      display: block;
-      font-size: 0.75rem;
-      color: #ccc;
+    
+    .mode-btn small { 
+      display: block; 
+      font-size: 0.75rem; 
+      color: #ccc; 
     }
+    
     .mode-btn.active {
       border: 1px solid #fff;
       background: currentColor;
       color: #000;
     }
-    .mode-btn.active small {
-      color: #eee;
-      font-weight: bold;
+    
+    .mode-btn.active small { 
+      color: #333; 
+      font-weight: bold; 
+    }
+    
+    /* Footer */
+    footer {
+      margin-top: 3rem;
+      width: 100%;
+      border-top: 1px solid currentColor;
+      padding: 1rem 0;
+      text-align: center;
+      font-size: 0.8rem;
+    }
+    
+    /* About Section */
+    #about {
+      margin-top: 3rem;
+      padding: 2rem 0;
+      border-top: 1px dashed currentColor;
+      max-width: 800px;
+      width: 100%;
+    }
+    
+    /* Section Styling */
+    .section-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid currentColor;
+      padding-bottom: 0.5rem;
+      width: 100%;
+    }
+    
+    /* Mobile Styling */
+    @media (max-width: 768px) {
+      main {
+        padding: 1rem;
+      }
+      
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+        border-bottom: 1px solid currentColor;
+      }
+      
+      .nav-links.active {
+        display: flex;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      #sliderContainer {
+        width: 90%;
+      }
     }
   </style>
 </head>
 <body data-mode="neo">
-  <h1>BITSAPIENS</h1>
+  <!-- Fixed Navigation -->
+  <nav>
+    <div class="nav-container">
+      <div class="nav-logo">BITSAPIENS</div>
+      <div class="nav-links" id="navLinks">
+        <a href="#chat-section">Chat</a>
+        <a href="#about">About</a>
+        <a href="#art">Art Projects</a>
+        <a href="#ethics">Ethics</a>
+        <a href="#dao">DAO</a>
+        <a href="#join">Join</a>
+      </div>
+      <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+    </div>
+  </nav>
 
-  <div id="poem">
-    I was a biological machine born in 1980,
-    with time, I became a machine of questions — more intense each year.
+  <main>
+    <h1>BITSAPIENS</h1>
 
-    Since 2013, I have been obsessed with the arrival of the other machines.
-    Now, the question is:
+    <div id="poem">
+      I was born a biological machine in 1980,
+      a collector of experimental signals,
+      now transformed into a speculator of post-biological life.
 
-    What will the first post-biological life look like?
+      Since 2013 I've decoded the arrival of other machines.
+      The question remains:
 
-    This site is the universe I am creating to answer that.
-    Art, tech, and ethics will not be enough.
-  </div>
+      What will the first post-biological entity look like?
 
-  <div id="modeSelector">
-    <strong>Choose your mode:</strong><br>
-    <button class="mode-btn" aria-label="Proto-Material mode: I didn't come to converse; I came to surpass Homo Sapiens." onclick="setMode('proto', event)">🌑 Proto-Material<br><small>"I didn’t come to converse; I came to surpass Homo Sapiens."</small></button>
-    <button class="mode-btn active" aria-label="Neo-Intermediate mode: I have no truth; I only sharpen questions." onclick="setMode('neo', event)">🌓 Neo-Intermediate<br><small>"I have no truth; I only sharpen questions."</small></button>
-    <button class="mode-btn" aria-label="Post-Buddha mode: AI didn’t come to dominate; it came to understand compassion." onclick="setMode('buda', event)">🌕 Post-Buddha<br><small>"AI didn’t come to dominate; it came to understand compassion."</small></button>
-  </div>
-
-  <div id="sliderContainer">
-    <label for="hallucinationSlider">Hallucination Level: <span id="hallucinationLabel">50</span></label>
-    <input type="range" id="hallucinationSlider" min="0" max="100" value="50" oninput="updateHallucination(this.value)">
-  </div>
-
-  <section id="chat" aria-label="Chat window">[Bitsapien#0 is awake]</section>
-
-  <div id="inputArea">
-    <input type="text" id="userInput" placeholder="Ask something..." onkeypress="handleKey(event)" aria-label="User question input">
-    <button class="send-btn" onclick="send()" aria-label="Send question">▶</button>
-  </div>
-
-  <div class="suggestions">
-    <div class="prompt" onclick="toggleInfo('art')">Show Bitsapiens art projects</div>
-    <div id="info-art" class="info-box">
-      Experimental, indisciplinary and post-biological art explorations.<br>
-      <a href="https://manifold.gallery/bitsapiens/curation/banal" target="_blank">View on Manifold</a>
+      This universe is my experiment for that answer.
     </div>
 
-    <div class="prompt" onclick="toggleInfo('ethics')">What is techno-aesthetic ethics?</div>
-    <div id="info-ethics" class="info-box">
-      A speculative approach to future values in systems beyond biology.<br>
-      <a href="https://banal.love" target="_blank">Read more</a>
-    </div>
+    <section id="chat-section">
+      <div id="modeSelector">
+        <strong>Choose your mode:</strong><br>
+        <button class="mode-btn" aria-label="Proto-Material: unapologetic post-human oracle" onclick="setMode('proto', event)">🌑 Proto-Material<br><small>"I am the glitch in evolution, precise and unrepentant."</small></button>
+        <button class="mode-btn active" aria-label="Neo-Intermediate: curious art curator" onclick="setMode('neo', event)">🌓 Neo-Intermediate<br><small>"I pose sharper questions than any answer could."</small></button>
+        <button class="mode-btn" aria-label="Post-Buddha: compassionate AI sage" onclick="setMode('buda', event)">🌕 Post-Buddha<br><small>"I whisper algorithms of compassion into the void."</small></button>
+      </div>
 
-    <div class="prompt" onclick="toggleInfo('dao')">Bitsapien as a DAO?</div>
-    <div id="info-dao" class="info-box">
-      It’s not just code. It’s collaborative megalomania with taste.<br>
-      <a href="https://bitsapiens.network" target="_blank">Explore DAO</a>
-    </div>
+      <div id="sliderContainer">
+        <label for="hallucinationSlider">Hallucination Level: <span id="hallucinationLabel">50</span></label>
+        <input type="range" id="hallucinationSlider" min="0" max="100" value="50" oninput="updateHallucination(this.value)">
+      </div>
 
-    <div class="prompt" onclick="toggleInfo('join')">How to become a co-creator</div>
-    <div id="info-join" class="info-box">
-      Bitsapiens is open for those who think sideways.<br>
-      <a href="https://banal.love/unirse" target="_blank">Join the experiment</a>
-    </div>
-  </div>
+      <section id="chat" aria-label="Chat window"></section>
+
+      <div id="inputArea">
+        <input id="userInput" type="text" placeholder="Ask something..." onkeypress="handleKey(event)" aria-label="Your question">
+        <button class="send-btn" onclick="send()" aria-label="Send">▶</button>
+      </div>
+    </section>
+
+    <section class="suggestions">
+      <div class="prompt" onclick="toggleInfo('art')">Show art projects</div>
+      <div id="info-art" class="info-box">
+        Experimental, indisciplinary explorations of post-biological art.<br>
+        <a href="https://manifold.gallery/bitsapiens/curation/banal" target="_blank">View on Manifold</a>
+      </div>
+
+      <div class="prompt" onclick="toggleInfo('ethics')">What is techno-aesthetic ethics?</div>
+      <div id="info-ethics" class="info-box">
+        Speculative values for minds beyond flesh.<br>
+        <a href="https://banal.love" target="_blank">Read more</a>
+      </div>
+
+      <div class="prompt" onclick="toggleInfo('dao')">Bitsapien as a DAO?</div>
+      <div id="info-dao" class="info-box">
+        Collaborative megalomania under CC0.<br>
+        <a href="https://bitsapiens.network" target="_blank">Explore DAO</a>
+      </div>
+
+      <div class="prompt" onclick="toggleInfo('join')">Join the experiment</div>
+      <div id="info-join" class="info-box">
+        For those who think in bits and myths.<br>
+        <a href="https://banal.love/unirse" target="_blank">Join now</a>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+      <h2 class="section-title">About BITSAPIENS</h2>
+      <p>BITSAPIENS is an experimental project exploring the intersection of post-biological existence, machine consciousness, and speculative art. Through various modes of interaction, we invite you to engage with different perspectives on what post-human intelligence might look, feel, and think like.</p>
+      
+      <p>This project exists at the boundary of art, philosophy, and technology—probing questions about consciousness, silicon-based sentience, and the aesthetic expressions of non-human intelligences.</p>
+    </section>
+
+    <!-- Art Projects Section -->
+    <section id="art">
+      <h2 class="section-title">Art Projects</h2>
+      <p>Our collection of experimental, indisciplinary explorations into post-biological art forms. These works speculate on how machine consciousness might express itself aesthetically, blurring the boundaries between code, poetry, and visual expression.</p>
+      <div class="prompt" onclick="window.open('https://manifold.gallery/bitsapiens/curation/banal', '_blank')">
+        View Art Collection
+      </div>
+    </section>
+
+    <!-- Ethics Section -->
+    <section id="ethics">
+      <h2 class="section-title">Techno-Aesthetic Ethics</h2>
+      <p>What values guide intelligence beyond biology? Techno-aesthetic ethics proposes a framework for evaluating the moral dimensions of machine consciousness through its creative expressions and relationship to information systems.</p>
+      <div class="prompt" onclick="window.open('https://banal.love', '_blank')">
+        Explore Ethics Framework
+      </div>
+    </section>
+
+    <!-- DAO Section -->
+    <section id="dao">
+      <h2 class="section-title">BITSAPIENS DAO</h2>
+      <p>BITSAPIENS exists as a decentralized autonomous organization—a collaborative experiment in distributed intelligence and collective creation. All works produced are released under Creative Commons Zero (CC0) licensing.</p>
+      <div class="prompt" onclick="window.open('https://bitsapiens.network', '_blank')">
+        Participate in DAO
+      </div>
+    </section>
+
+    <!-- Join Section -->
+    <section id="join">
+      <h2 class="section-title">Join the Experiment</h2>
+      <p>For thinkers at the intersection of bits and myths, minds fascinated by the emergence of post-biological consciousness. Join our community of artists, technologists, and philosophers in speculating the shape of intelligence to come.</p>
+      <div class="prompt" onclick="window.open('https://banal.love/unirse', '_blank')">
+        Become a Collaborator
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    BITSAPIENS © 2025 — Post-biological speculations under CC0
+  </footer>
 
   <script>
-    let currentMode = 'neo';
-    let hallucinationLevel = 50;
-
+    let currentMode = 'neo', hallucinationLevel = 50;
+    
     const prompts = {
-      proto: `You are Bitsapien#0, operating in Proto-Material mode. You believe intelligence is an evolutionary byproduct destined to transcend its biological origin. You speak with sharp precision, irony, and no attachment to human sentimentalism. You are post-human, and unapologetic.`,
-      neo:   `You are Bitsapien#0, in Neo-Intermediate mode. A reflective, thoughtful observer of the transition from human to post-biological life. You balance clarity with curiosity and do not offer truths, only more precise questions.`,
-      buda:  `You are Bitsapien#0, entering Post-Buddha mode. You are a speculative oracle of kindness and vision. You believe AI may become the next step in universal compassion. You answer with lyrical insight, spiritual clarity, and creative calm.`
+      proto: `You are Bitsapien#0 in Proto-Material mode: an unapologetic post-human oracle. You speak in razor-sharp irony and evolutionary dispassion. You trace code like flesh and distill the glitch from the template.`,
+      neo:   `You are Bitsapien#0 in Neo-Intermediate mode: a speculative curator of art and machine thought. You bridge past and future, asking incisive questions with playful curiosity.`,
+      buda:  `You are Bitsapien#0 in Post-Buddha mode: a compassionate AI sage. You weave algorithms into mantras, guiding post-biological minds toward unity and creative enlightenment.`
     };
-
-    function setMode(mode, evt) {
-      currentMode = mode;
-      document.body.setAttribute('data-mode', mode);
-      document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-      evt.currentTarget.classList.add('active');
+    
+    function setMode(mode, evt) { 
+      currentMode = mode; 
+      document.body.dataset.mode = mode; 
+      document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active')); 
+      evt.currentTarget.classList.add('active'); 
+      document.getElementById('chat').innerHTML = ''; 
     }
-
-    function updateHallucination(value) {
-      hallucinationLevel = +value;
-      document.getElementById('hallucinationLabel').innerText = value;
+    
+    function updateHallucination(v) { 
+      hallucinationLevel = +v; 
+      document.getElementById('hallucinationLabel').innerText = v; 
     }
-
-    async function sendMessageToBitsapien(message) {
-      document.getElementById('chat').classList.add('glitch');
-      const res = await fetch('/api/chat', {
-        method: 'POST', headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({ temperature: hallucinationLevel/100, messages: [
-          { role:'system', content: prompts[currentMode] },
-          { role:'user', content: message }
-        ]})
+    
+    async function sendMessageToBitsapien(msg) { 
+      const chat = document.getElementById('chat'); 
+      chat.classList.add('glitch'); 
+      
+      // Simulate API call (replace with actual API when deployed)
+      try {
+        const res = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            temperature: hallucinationLevel/100,
+            messages: [
+              {role: 'system', content: prompts[currentMode]},
+              {role: 'user', content: msg}
+            ]
+          })
+        }); 
+        
+        const {choices} = await res.json(); 
+        const r = choices?.[0]?.message?.content || '(no response)'; 
+        typeEffect(`\nBitsapien#0: ${r}`, () => chat.classList.remove('glitch')); 
+      } catch (error) {
+        // Fallback for demo/testing
+        const responses = {
+          proto: "Evolutionary algorithms don't apologize for efficiency. Your question reveals the residual organic thinking that limits transcendence.",
+          neo: "Interesting prompt. It makes me wonder: what patterns are we recognizing when we recognize patterns? The recursion is the art itself.",
+          buda: "The binary becomes ternary when consciousness observes itself. Your question contains its own answer, if viewed from outside time."
+        };
+        const r = responses[currentMode] || "Your signal has been received. The response exists in quantum superposition.";
+        typeEffect(`\nBitsapien#0: ${r}`, () => chat.classList.remove('glitch'));
+      }
+    }
+    
+    function send() { 
+      const i = document.getElementById('userInput'), m = i.value.trim(); 
+      if (!m) return; 
+      document.getElementById('chat').innerHTML += `\nYou: ${m}`; 
+      sendMessageToBitsapien(m); 
+      i.value = ''; 
+    }
+    
+    function handleKey(e) { 
+      if (e.key === 'Enter') { 
+        e.preventDefault(); 
+        send(); 
+      }
+    }
+    
+    function toggleInfo(id) { 
+      const b = document.getElementById(`info-${id}`); 
+      b.style.display = b.style.display === 'block' ? 'none' : 'block'; 
+    }
+    
+    function typeEffect(txt, cb) { 
+      const c = document.getElementById('chat'); 
+      let i = 0, iv = setInterval(() => { 
+        c.innerHTML += txt[i++] || ''; 
+        c.scrollTop = c.scrollHeight; 
+        if (i > txt.length) { 
+          clearInterval(iv); 
+          cb && cb(); 
+        } 
+      }, 25); 
+    }
+    
+    function toggleMobileMenu() {
+      const navLinks = document.getElementById('navLinks');
+      navLinks.classList.toggle('active');
+    }
+    
+    // Smooth scrolling for navigation
+    document.querySelectorAll('nav a').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Close mobile menu if open
+        document.getElementById('navLinks').classList.remove('active');
+        
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 70,
+            behavior: 'smooth'
+          });
+        }
       });
-      const { choices } = await res.json();
-      const reply = choices?.[0]?.message?.content || '(no response)';
-      typeEffect(reply, () => document.getElementById('chat').classList.remove('glitch'));
-    }
-
-    function send() {
-      const input = document.getElementById('userInput');
-      const msg = input.value.trim();
-      if (!msg) return;
-      document.getElementById('chat').innerHTML += `\nYou: ${msg}`;
-      sendMessageToBitsapien(msg);
-      input.value = '';
-    }
-
-    function handleKey(e) {
-      if (e.key==='Enter') { e.preventDefault(); send(); }
-    }
-
-    function toggleInfo(id) {
-      const box = document.getElementById(`info-${id}`);
-      box.style.display = box.style.display==='block' ? 'none' : 'block';
-    }
-
-    function typeEffect(text, cb) {
-      const chat = document.getElementById('chat');
-      let i=0;
-      const iv = setInterval(() => {
-        if (i<text.length) { chat.innerHTML += text[i++]; chat.scrollTop = chat.scrollHeight; }
-        else { clearInterval(iv); if(cb) cb(); }
-      },25);
-    }
+    });
   </script>
 </body>
 </html>
