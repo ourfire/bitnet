@@ -5,166 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BITSAPIENS</title>
   <meta name="description" content="Bitsapiens is a post-biological art and design project blending speculative design, conceptual branding, and collective AI experiments under CC0.">
-  <!-- Open Graph -->
   <meta property="og:title" content="BITSAPIENS – Post-biological Speculations">
   <meta property="og:description" content="Explore speculative futures at the intersection of art, AI, and post-human consciousness.">
   <meta property="og:image" content="/og-image.png">
   <link rel="icon" href="/favicon.ico">
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
-  <style>
-    /* Variables */
-    :root {
-      --color-bg: #000;
-      --color-text: #fff;
-      --color-accent: #0f0;
-      --font-sans: 'Rajdhani', sans-serif;
-      --font-mono: monospace;
-      --space: 1rem;
-      --transition: 0.2s;
-    }
-    /* Mode atmospheres */
-    body[data-mode="proto"] { --color-bg:#1a1a00; --color-text:#e6ff05; --color-accent:#e6ff05; }
-    body[data-mode="neo"]   { --color-bg:#000;    --color-text:#fff;    --color-accent:#fff; }
-    body[data-mode="buda"]  { --color-bg:#111;    --color-text:#fff;    --color-accent:#87CEEB; }
-    /* Base styling */
-    body {
-      background-color: var(--color-bg);
-      color: var(--color-text);
-      font-family: var(--font-sans);
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      letter-spacing: 0.02em;
-      line-height: 1.6;
-    }
-    h1,h2,h3 { margin: var(--space) 0; }
-    a, button { transition: background var(--transition), color var(--transition), transform var(--transition); }
-    a:focus, button:focus, input:focus { outline:2px dashed var(--color-text); outline-offset:2px; }
-    /* Navigation */
-    nav {
-      position: fixed;
-      top: 0; width: 100%;
-      background: rgba(0,0,0,0.9);
-      border-bottom: 1px solid var(--color-text);
-      z-index: 1000;
-    }
-    .nav-container {
-      max-width: 1200px; margin: 0 auto;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: var(--space);
-    }
-    .nav-logo { font-weight:600; font-size:1.5rem; }
-    .nav-links { display:flex; gap:calc(var(--space)*1.5); }
-    .nav-links a {
-      color: var(--color-text); text-decoration:none; font-size:0.9rem; position:relative;
-    }
-    .nav-links a.active::after {
-      content:''; position:absolute; bottom:-4px; left:0;
-      width:100%; height:2px; background:var(--color-text);
-    }
-    .mobile-menu-btn {
-      display:none; background:none; border:none; font-size:1.5rem;
-      color:var(--color-text); cursor:pointer;
-    }
-    /* Subtitle */
-    #subtitle {
-      font-size:1.1rem; margin: -0.5rem 0 var(--space);
-      text-align:center; max-width:800px; opacity:0.8;
-    }
-    /* Main */
-    main { margin-top:5rem; padding:var(--space); max-width:1200px; width:100%; }
-    /* Poem */
-    #poem {
-      max-width:800px;
-      text-align:left;
-      /* Center horizontally */
-      margin: calc(var(--space) * 2) auto;
-      font-family:var(--font-mono);
-      font-size:1.1rem;
-      opacity:0.9;
-      white-space: pre-line;
-      line-height:1.4;
-    }
-    /* Mode selector */
-    #modeSelector { text-align:center; margin-bottom:var(--space); }
-    .mode-btn {
-      background:none; color:var(--color-text);
-      border:1px solid var(--color-accent);
-      padding:0.75rem 1rem; margin:0.5rem;
-      cursor:pointer; font-family:var(--font-mono); min-width:150px;
-    }
-    .mode-btn.active {
-      background:var(--color-accent); color:var(--color-bg);
-    }
-    .mode-btn small { display:block; font-size:0.75rem; color:#ccc; }
-    .mode-info {
-      background:#111;
-      border:1px dashed var(--color-accent);
-      padding:var(--space);
-      /* Center horizontally */
-      margin: var(--space) auto;
-      max-width:800px;
-      font-size:0.9rem;
-    }
-    .mode-info ul { margin-left:1.5rem; }
-    /* Slider */
-    #sliderContainer {
-      width:60%; max-width:500px; margin:0 auto var(--space);
-    }
-    #hallucinationSlider {
-      width:100%; accent-color:var(--color-accent);
-    }
-    /* Chat */
-    #chat {
-      background:#111;
-      border:1px solid var(--color-accent);
-      padding:var(--space);
-      width:100%; max-width:800px;
-      height:400px;
-      overflow-y:auto;
-      font-family:var(--font-mono);
-      box-shadow:0 0 5px var(--color-accent);
-      /* Center horizontally */
-      margin: 0 auto var(--space);
-    }
-    /* Input */
-    #inputArea {
-      display:flex;
-      width:100%; max-width:800px;
-      /* Center horizontally */
-      margin: 0 auto var(--space);
-    }
-    #userInput {
-      flex:1; background:#000; border:1px solid var(--color-accent);
-      padding:0.75rem; font-family:var(--font-mono); color:var(--color-text);
-    }
-    .send-btn {
-      background:var(--color-accent); color:var(--color-bg);
-      border:none; padding:0 1rem; cursor:pointer;
-      font-weight:bold; min-height:44px;
-    }
-    /* Section titles */
-    .section-title {
-      font-size:1.5rem; border-bottom:1px solid var(--color-accent);
-      padding-bottom:0.5rem; margin-bottom:var(--space);
-    }
-    /* Mobile */
-    @media(max-width:768px) {
-      .nav-links { display:none; flex-direction:column; background:rgba(0,0,0,0.95);
-        padding:var(--space); width:100%; }
-      .nav-links.active { display:flex; }
-      .mobile-menu-btn { display:block; }
-      #sliderContainer { width:90%; }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body data-mode="neo">
   <nav>
     <div class="nav-container">
-      <div class="nav-logo">BITSAPIENS</div>
+      <a href="#" class="nav-logo" aria-label="Ir al inicio">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 140 0 40" height="30" aria-hidden="true">
+          <rect x="5" y="5" width="8" height="30" fill="currentColor"/>
+          <rect x="15" y="5" width="8" height="30" fill="currentColor"/>
+          <rect x="25" y="5" width="8" height="30" fill="currentColor"/>
+          <rect x="35" y="5" width="8" height="30" fill="currentColor"/>
+          <rect x="45" y="5" width="8" height="30" fill="currentColor"/>
+          <rect x="55" y="5" width="8" height="30" fill="currentColor"/>
+          <rect x="65" y="5" width="8" height="30" fill="currentColor"/>
+          <rect x="75" y="5" width="8" height="30" fill="currentColor"/>
+          <rect x="85" y="5" width="8" height="30" fill="currentColor"/>
+          <rect x="95" y="5" width="8" height="30" fill="currentColor"/>
+        </svg>
+      </a>
       <div id="navLinks" class="nav-links">
         <a href="#chat-section">Chat</a>
         <a href="#about">About</a>
@@ -173,42 +37,44 @@
         <a href="#dao">DAO</a>
         <a href="#join">Join</a>
       </div>
-      <button class="mobile-menu-btn" aria-expanded="false" onclick="toggleMobileMenu()">☰</button>
+      <button id="mobileMenuBtn" class="mobile-menu-btn" aria-expanded="false" aria-label="Toggle navigation menu">☰</button>
     </div>
   </nav>
+
   <main>
     <h1>BITSAPIENS</h1>
     <p id="subtitle">Speculative futures at the crossroads of art, AI, and post-human consciousness.</p>
+
     <div id="poem">"Once biologists concluded that organisms are algorithms,
       they dismantled the wall between the organic and the inorganic,
       turned the computer revolution from a purely mechanical affair
       into a biological cataclysm, and shifted authority from
       individual humans to networked algorithms." — Yuval Noah Harari, Homo Deus</div>
-    <div id="modeSelector">
-      <strong>Choose your mode:</strong><br>
-      <button class="mode-btn" onclick="setMode('proto', event)">🌑 Proto-Material<small>The tech will replace humanity.</small></button>
-      <button class="mode-btn active" onclick="setMode('neo', event)">🌓 Neo-Intermediate<small>Humans & machines co-evolve.</small></button>
-      <button class="mode-btn" onclick="setMode('buda', event)">🌕 Post-Buddha<small>Tech extends consciousness.</small></button>
-    </div>
-    <div class="mode-info" id="modeInfo">
-      <ul>
-        <li><strong>Proto-Material:</strong> Tecnologia superará y reemplazará capacidades humanas.</li>
-        <li><strong>Neo-Intermediate:</strong> Fronteras impredecibles entre humano y AI.</li>
-        <li><strong>Post-Buddha:</strong> Tecnología como extensión de la conciencia.</li>
-      </ul>
-    </div>
-    <div id="sliderContainer">
-      <label for="hallucinationSlider">Hallucination: <span id="hallucinationLabel">50</span></label>
-      <input id="hallucinationSlider" type="range" min="0" max="100" value="50" oninput="updateHallucination(this.value)">
-    </div>
+
     <section id="chat-section">
       <h2 class="section-title">Interactive Chat</h2>
-      <div id="chat"></div>
+      <div id="chat" aria-live="polite"></div>
+
       <div id="inputArea">
-        <input id="userInput" type="text" placeholder="Ask something..." onkeypress="handleKey(event)">
-        <button class="send-btn" onclick="send()">▶</button>
+        <input id="userInput" type="text" placeholder="Ask something...">
+        <button id="sendBtn" class="send-btn">▶</button>
       </div>
-    </section>
+
+       <div id="modeSelector">
+        <strong>Choose your mode:</strong><br>
+        <button class="mode-btn" data-mode="proto">🌑 Proto-Material<small>The tech will replace humanity.</small></button>
+        <button class="mode-btn active" data-mode="neo">🌓 Neo-Intermediate<small>Humans & machines co-evolve.</small></button>
+        <button class="mode-btn" data-mode="buda">🌕 Post-Buddha<small>Tech extends consciousness.</small></button>
+      </div>
+      <div class="mode-info" id="modeInfo">
+        <ul>
+          <li><strong>Proto-Material:</strong> Tecnologia superará y reemplazará capacidades humanas.</li>
+          <li><strong>Neo-Intermediate:</strong> Fronteras impredecibles entre humano y AI.</li>
+          <li><strong>Post-Buddha:</strong> Tecnología como extensión de la conciencia.</li>
+        </ul>
+      </div>
+       </section>
+
     <section id="about">
       <h2 class="section-title">About BITSAPIENS</h2>
       <p>An artist turned into a brand. A living fiction at the intersection of code and consciousness. Speculative design, conceptual branding, internet-native art under CC0.</p>
@@ -230,27 +96,11 @@
       <p>Collaborators at the nexus of bits & myths. <a href="https://banal.love/unirse" target="_blank">Become a Collaborator</a>.</p>
     </section>
   </main>
+
   <footer>
-    BITSAPIENS © 2025 — Post-biological speculations under CC0
+    <p>BITSAPIENS © 2025 — Post-biological speculations under CC0</p>
   </footer>
-  <script>
-    let currentMode='neo', hallucinationLevel=50;
-    const prompts={
-      proto:`Eres Bitsapien#0 en modo Proto-Material...`,
-      neo:`Eres Bitsapien#0 en modo Neo-Intermediate...`,
-      buda:`Eres Bitsapien#0 en modo Post-Buddha...`
-    };
-    function setMode(mode,evt){currentMode=mode;document.body.dataset.mode=mode;document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));evt.currentTarget.classList.add('active');document.getElementById('modeInfo').scrollIntoView({behavior:'smooth'});}    
-    function updateHallucination(v){hallucinationLevel=+v;document.getElementById('hallucinationLabel').innerText=v;}    
-    function appendMessage(who,text){const c=document.getElementById('chat');c.innerHTML+=`<br><strong>${who}:</strong> ${text}`;c.scrollTop=c.scrollHeight;}    
-    async function sendMessageToBitsapien(msg){const c=document.getElementById('chat');c.classList.add('glitch');try{const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({temperature:hallucinationLevel/100,messages:[{role:'system',content:prompts[currentMode]},{role:'user',content:msg}]})});const j=await r.json();typeEffect(`<strong>Bitsapien#0:</strong> ${j.choices[0].message.content}<br>`,()=>c.classList.remove('glitch'));}catch{typeEffect(`<strong>Bitsapien#0:</strong> fallback<br>`,()=>c.classList.remove('glitch'));}}    
-    function send(){const i=document.getElementById('userInput'),m=i.value.trim();if(!m)return;appendMessage('You',m);sendMessageToBitsapien(m);i.value='';}    
-    function handleKey(e){if(e.key==='Enter'){e.preventDefault();send();}}    
-    function toggleInfo(id){const b=document.getElementById(`info-${id}`);b.style.display=(b.style.display==='block'?'none':'block');}    
-    function toggleMobileMenu(){const nav=document.getElementById('navLinks'),btn=document.querySelector('.mobile-menu-btn'),ex=btn.getAttribute('aria-expanded')==='true';btn.setAttribute('aria-expanded',String(!ex));nav.classList.toggle('active');}    
-    document.querySelectorAll('nav a').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();document.getElementById('navLinks').classList.remove('active');const t=document.querySelector(a.getAttribute('href'));if(t)window.scrollTo({top:t.offsetTop-60,behavior:'smooth'});}));    
-    window.addEventListener('scroll',()=>{const s=['chat-section','about','art','ethics','dao','join'];let found='';s.forEach(id=>{const el=document.getElementById(id);if(el.getBoundingClientRect().top<80)found=id;});document.querySelectorAll('.nav-links a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')===`#${found}`));});    
-    function typeEffect(txt,cb){const c=document.getElementById('chat');let i=0;const iv=setInterval(()=>{c.innerHTML+=txt[i++]||'';c.scrollTop=c.scrollHeight;if(i>txt.length){clearInterval(iv);cb();}},25);}  
-  </script>
+
+  <script src="script.js" defer></script>
 </body>
 </html>
