@@ -267,3 +267,28 @@ footer {
 @keyframes blink {
     50% { opacity: 0; }
 }
+/* --- Estilos para Enlaces Dentro de las Secciones --- */
+main section a {
+    color: var(--color-text); /* Usa el color principal del texto del modo actual */
+    text-decoration: underline; /* Mantiene el subrayado por usabilidad */
+    text-decoration-style: dashed; /* Subrayado punteado (opcional) */
+    text-decoration-thickness: 1px; /* Grosor del subrayado (opcional) */
+    text-decoration-color: var(--color-accent); /* Color del subrayado usa el acento */
+    opacity: 0.9; /* Ligeramente atenuado para diferenciar del texto normal */
+    transition: color var(--transition), opacity var(--transition), text-decoration-color var(--transition); /* Transición suave */
+}
+
+main section a:hover,
+main section a:focus-visible { /* Aplica también en foco de teclado */
+    color: var(--color-accent); /* Cambia al color de acento al pasar el ratón/foco */
+    text-decoration-color: var(--color-text); /* Cambia el color del subrayado */
+    opacity: 1; /* Opacidad completa */
+    outline: none; /* Opcional: Quita el outline si el cambio de color es suficiente indicación de foco */
+}
+
+/* Quitar estilos específicos si fueron aplicados a elementos hijos no deseados */
+main section a small {
+    /* Si los enlaces tuvieran <small> dentro, resetear estilos aquí si es necesario */
+    color: inherit; /* Heredar color del enlace padre */
+    opacity: inherit;
+}
