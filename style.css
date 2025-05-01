@@ -1,12 +1,12 @@
 /* Variables */
 :root {
-    --color-bg: #000;
-    --color-text: #fff;
-    --color-accent: #0f0; /* Verde neón por defecto */
-    --font-sans: 'Rajdhani', sans-serif;
-    --font-mono: monospace;
-    --space: 1rem;
-    --transition: 0.2s;
+  --color-bg: #000;
+  --color-text: #fff;
+  --color-accent: #0f0; /* Verde neón por defecto */
+  --font-sans: 'Rajdhani', sans-serif;
+  --font-mono: monospace;
+  --space: 1rem;
+  --transition: 0.2s;
 }
 
 /* Mode atmospheres */
@@ -16,17 +16,17 @@ body[data-mode="buda"]  { --color-bg:#111;    --color-text:#fff;    --color-acce
 
 /* Base styling */
 body {
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  font-family: var(--font-sans);
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  letter-spacing: 0.02em;
-  line-height: 1.6;
-  transition: background-color var(--transition), color var(--transition);
+background-color: var(--color-bg);
+color: var(--color-text);
+font-family: var(--font-sans);
+margin: 0;
+padding: 0;
+display: flex;
+flex-direction: column;
+align-items: center;
+letter-spacing: 0.02em;
+line-height: 1.6;
+transition: background-color var(--transition), color var(--transition);
 }
 
 h1, h2, h3 { margin: var(--space) 0; }
@@ -35,86 +35,86 @@ a:focus, button:focus, input:focus { outline: 2px dashed var(--color-text); outl
 
 /* Navigation */
 nav {
-  position: fixed;
-  top: 0; width: 100%;
-  background: rgba(0,0,0,0.9);
-  border-bottom: 1px solid var(--color-text);
-  z-index: 1000;
+position: fixed;
+top: 0; width: 100%;
+background: rgba(0,0,0,0.9);
+border-bottom: 1px solid var(--color-text);
+z-index: 1000;
 }
 .nav-container {
-  max-width: 1200px; margin: 0 auto;
-  display: flex; justify-content: space-between; align-items: center;
-  padding: var(--space);
+max-width: 1200px; margin: 0 auto;
+display: flex; justify-content: space-between; align-items: center;
+padding: var(--space);
 }
 
 /* Estilos para el contenedor del logo (<a>) */
 .nav-logo {
-  display: inline-flex;
-  align-items: center;
-  color: var(--color-text); /* Color base para 'currentColor' en SVG si JS falla */
-  text-decoration: none;
+display: inline-flex;
+align-items: center;
+color: var(--color-text); /* Color base para 'currentColor' en SVG si JS falla */
+text-decoration: none;
 }
 
 /* Estilos base para el SVG del logo */
 .nav-logo svg {
-  display: block;
-  height: 30px;
-  width: auto;
-  /* No se establece 'fill' aquí; será controlado por JS o 'currentColor' */
+display: block;
+height: 30px;
+width: auto;
+/* No se establece 'fill' aquí; será controlado por JS o 'currentColor' */
 }
 
 /* Transición para cada barra del logo */
 .nav-logo svg rect {
-    transition: fill 0.3s ease;
+  transition: fill 0.3s ease;
 }
 
 .nav-logo:hover svg {
-    filter: brightness(1.2); /* Efecto hover general en el SVG */
+  filter: brightness(1.2); /* Efecto hover general en el SVG */
 }
 
 .nav-links {
-    display: flex;
-    gap: calc(var(--space) * 2); /* Espacio aumentado */
-    align-items: center;
+  display: flex;
+  gap: calc(var(--space) * 2); /* Espacio aumentado */
+  align-items: center;
 }
 
 .nav-links a {
-    color: var(--color-text);
-    text-decoration: none;
-    font-size: 1rem; /* Tamaño aumentado */
-    position: relative;
-    padding-bottom: 6px;
-    padding-left: calc(var(--space) * 0.5);
-    padding-right: calc(var(--space) * 0.5);
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: 1rem; /* Tamaño aumentado */
+  position: relative;
+  padding-bottom: 6px;
+  padding-left: calc(var(--space) * 0.5);
+  padding-right: calc(var(--space) * 0.5);
 }
 
 .nav-links a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: calc(var(--space) * 0.5);
-    width: calc(100% - var(--space));
-    height: 2px;
-    background: var(--color-accent);
-    transform: scaleX(0);
-    transition: transform var(--transition);
-    transform-origin: center;
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: calc(var(--space) * 0.5);
+  width: calc(100% - var(--space));
+  height: 2px;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transition: transform var(--transition);
+  transform-origin: center;
 }
 
 .nav-links a.active::after,
 .nav-links a:hover::after {
-    transform: scaleX(1);
+  transform: scaleX(1);
 }
 
 .mobile-menu-btn {
-  display: none; background: none; border: none; font-size: 1.5rem;
-  color: var(--color-text); cursor: pointer;
+display: none; background: none; border: none; font-size: 1.5rem;
+color: var(--color-text); cursor: pointer;
 }
 
 /* Subtitle */
 #subtitle {
-  font-size: 1.1rem; margin: -0.5rem 0 var(--space);
-  text-align: left; max-width: 800px; opacity: 0.8;
+font-size: 1.1rem; margin: -0.5rem 0 var(--space);
+text-align: left; max-width: 800px; opacity: 0.8;
 }
 
 /* Main */
@@ -122,32 +122,32 @@ main { margin-top: 5rem; padding: var(--space); max-width: 1200px; width: 100%; 
 
 /* Poem */
 #poem {
-  max-width: 800px;
-  text-align: left;
-  margin: calc(var(--space) * 2) auto;
-  font-family: var(--font-mono);
-  font-size: 1.1rem;
-  opacity: 0.9;
-  white-space: pre-line;
-  line-height: 1.4;
+max-width: 800px;
+text-align: left;
+margin: calc(var(--space) * 2) auto;
+font-family: var(--font-mono);
+font-size: 1.1rem;
+opacity: 0.9;
+white-space: pre-line;
+line-height: 1.4;
 }
 
 /* Input Area */
 #inputArea {
-  display: flex;
-  width: 100%; max-width: 800px;
-  margin: 0 auto var(--space);
+display: flex;
+width: 100%; max-width: 800px;
+margin: 0 auto var(--space);
 }
 #userInput {
-  flex: 1; background: #000; border: 1px solid var(--color-accent);
-  padding: 0.75rem; font-family: var(--font-mono); color: var(--color-text);
-  min-height: 44px;
-  box-sizing: border-box;
+flex: 1; background: #000; border: 1px solid var(--color-accent);
+padding: 0.75rem; font-family: var(--font-mono); color: var(--color-text);
+min-height: 44px;
+box-sizing: border-box;
 }
 .send-btn {
-  background: var(--color-accent); color: var(--color-bg);
-  border: none; padding: 0 1rem; cursor: pointer;
-  font-weight: bold; min-height: 44px;
+background: var(--color-accent); color: var(--color-bg);
+border: none; padding: 0 1rem; cursor: pointer;
+font-weight: bold; min-height: 44px;
 }
 .send-btn:hover { filter: brightness(1.2); }
 .send-btn:active { transform: scale(0.95); }
@@ -155,41 +155,41 @@ main { margin-top: 5rem; padding: var(--space); max-width: 1200px; width: 100%; 
 
 /* Mode selector */
 #modeSelector {
-  text-align: center;
-  margin: calc(var(--space) * 1.5) auto var(--space);
-  max-width: 800px;
-  width: 100%;
+text-align: center;
+margin: calc(var(--space) * 1.5) auto var(--space);
+max-width: 800px;
+width: 100%;
 }
 .mode-btn {
-  background: none; color: var(--color-text);
-  border: 1px solid var(--color-accent);
-  padding: 0.75rem 1rem; margin: 0.5rem;
-  cursor: pointer; font-family: var(--font-mono); min-width: 150px;
-  opacity: 0.8;
+background: none; color: var(--color-text);
+border: 1px solid var(--color-accent);
+padding: 0.75rem 1rem; margin: 0.5rem;
+cursor: pointer; font-family: var(--font-mono); min-width: 150px;
+opacity: 0.8;
 }
 .mode-btn:hover { opacity: 1; background: rgba(255, 255, 255, 0.1); }
 .mode-btn.active {
-  background: var(--color-accent); color: var(--color-bg);
-  opacity: 1;
-  box-shadow: 0 0 5px var(--color-accent);
+background: var(--color-accent); color: var(--color-bg);
+opacity: 1;
+box-shadow: 0 0 5px var(--color-accent);
 }
 .mode-btn small { display: block; font-size: 0.75rem; color: #ccc; margin-top: 0.25rem;}
 .mode-btn.active small { color: var(--color-bg); opacity: 0.8; }
 
 .mode-info {
-  background: #111;
-  border: 1px dashed var(--color-accent);
-  padding: var(--space);
-  margin: var(--space) auto;
-  max-width: 800px;
-  font-size: 0.9rem;
-  opacity: 0; max-height: 0;
-  overflow: hidden;
-  transition: opacity var(--transition), max-height var(--transition), padding var(--transition), margin var(--transition);
+background: #111;
+border: 1px dashed var(--color-accent);
+padding: var(--space);
+margin: var(--space) auto;
+max-width: 800px;
+font-size: 0.9rem;
+opacity: 0; max-height: 0;
+overflow: hidden;
+transition: opacity var(--transition), max-height var(--transition), padding var(--transition), margin var(--transition);
 }
 body[data-mode] .mode-info {
-    opacity: 1; max-height: 200px;
-    padding: var(--space); margin: var(--space) auto;
+  opacity: 1; max-height: 200px;
+  padding: var(--space); margin: var(--space) auto;
 }
 .mode-info ul { margin-left: 1.5rem; padding-left: 0; list-style: none;}
 .mode-info li { margin-bottom: 0.5rem; }
@@ -197,98 +197,194 @@ body[data-mode] .mode-info {
 
 /* Chat */
 #chat {
-  background: #111;
-  border: 1px solid var(--color-accent);
-  padding: var(--space);
-  width: 100%; max-width: 800px;
-  height: 400px;
-  overflow-y: auto;
-  font-family: var(--font-mono);
-  box-shadow: 0 0 5px var(--color-accent);
-  margin: 0 auto var(--space);
-  line-height: 1.5;
-  scroll-behavior: smooth;
+background: #111;
+border: 1px solid var(--color-accent);
+padding: var(--space);
+width: 100%; max-width: 800px;
+height: 400px;
+overflow-y: auto;
+font-family: var(--font-mono);
+box-shadow: 0 0 5px var(--color-accent);
+margin: 0 auto var(--space);
+line-height: 1.5;
+scroll-behavior: smooth;
 }
 #chat strong { color: var(--color-accent); }
 #chat .glitch { opacity: 0.7; }
 
 /* Section titles */
 .section-title {
-  font-size: 1.5rem; border-bottom: 1px solid var(--color-accent);
-  padding-bottom: 0.5rem; margin-bottom: var(--space);
+font-size: 1.5rem; border-bottom: 1px solid var(--color-accent);
+padding-bottom: 0.5rem; margin-bottom: var(--space);
 }
 
-/* Footer */
-footer {
-  text-align: center;
-  padding: calc(var(--space) * 2);
-  margin-top: calc(var(--space) * 2);
-  font-size: 0.85rem;
-  opacity: 0.7;
-  border-top: 1px solid #333;
-  width: 100%;
+/* --- NUEVOS ESTILOS PARA LA SECCIÓN DE ART PROJECTS --- */
+#art .projects-grid {
+display: grid; /* Usa CSS Grid para el layout */
+grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Columnas responsivas */
+gap: 2rem; /* Espacio entre tarjetas */
+padding: 1rem 0; /* Espaciado vertical */
 }
 
-/* Mobile */
-@media (max-width: 768px) {
-  .nav-links {
-    display: none; position: absolute;
-    top: 100%; left: 0; width: 100%;
-    flex-direction: column; background: rgba(0, 0, 0, 0.98);
-    padding: var(--space); border-top: 1px solid var(--color-text);
-    gap: var(--space); align-items: center;
-   }
-  .nav-links.active { display: flex; }
-
-  .nav-links a {
-        font-size: 1.1rem; padding: var(--space) 0;
-        width: 100%; text-align: center;
-        padding-left: 0; padding-right: 0;
-    }
-   .nav-links a::after { display: none; }
-
-  .mobile-menu-btn { display: block; }
-  #inputArea { flex-direction: column; }
-  #userInput { margin-bottom: 0.5rem; }
-  .send-btn { width: 100%; }
-  #modeSelector { display: flex; flex-direction: column; align-items: center; }
-  .mode-btn { width: 80%; }
+.project-card {
+background-color: #111; /* Fondo oscuro para las tarjetas, similar al chat */
+border: 1px solid var(--color-accent); /* Borde con color de acento */
+overflow: hidden; /* Asegura que la imagen no se salga */
+display: flex;
+flex-direction: column;
+transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición suave para hover */
+text-align: left; /* Alineación de texto a la izquierda */
 }
 
-/* Typing Animation */
-.typing-cursor::after {
-    content: '▋';
-    animation: blink 1s step-end infinite;
-    margin-left: 2px;
-    color: var(--color-accent);
-    display: inline-block;
-    vertical-align: baseline;
-}
-@keyframes blink {
-    50% { opacity: 0; }
-}
-/* --- Estilos para Enlaces Dentro de las Secciones --- */
-main section a {
-    color: var(--color-text); /* Usa el color principal del texto del modo actual */
-    text-decoration: underline; /* Mantiene el subrayado por usabilidad */
-    text-decoration-style: dashed; /* Subrayado punteado (opcional) */
-    text-decoration-thickness: 1px; /* Grosor del subrayado (opcional) */
-    text-decoration-color: var(--color-accent); /* Color del subrayado usa el acento */
-    opacity: 0.9; /* Ligeramente atenuado para diferenciar del texto normal */
-    transition: color var(--transition), opacity var(--transition), text-decoration-color var(--transition); /* Transición suave */
+.project-card:hover {
+  transform: translateY(-5px); /* Efecto de elevación al pasar el mouse */
+  box-shadow: 0 4px 15px rgba(var(--color-accent-rgb, 255, 255, 255), 0.2); /* Sombra con color de acento (necesita definir --color-accent-rgb si no es blanco/negro) */
 }
 
-main section a:hover,
-main section a:focus-visible { /* Aplica también en foco de teclado */
-    color: var(--color-accent); /* Cambia al color de acento al pasar el ratón/foco */
-    text-decoration-color: var(--color-text); /* Cambia el color del subrayado */
-    opacity: 1; /* Opacidad completa */
-    outline: none; /* Opcional: Quita el outline si el cambio de color es suficiente indicación de foco */
+.project-card img {
+width: 100%; /* La imagen ocupa todo el ancho de la tarjeta */
+height: 180px; /* Altura fija para la imagen (ajusta según necesites) */
+object-fit: cover; /* Asegura que la imagen cubra el espacio sin distorsionarse */
+display: block;
+border-bottom: 1px solid var(--color-accent); /* Línea separadora debajo de la imagen */
+}
+
+.project-info {
+padding: 1rem; /* Espaciado interno para el texto */
+flex-grow: 1; /* Permite que esta sección crezca para llenar el espacio */
+display: flex;
+flex-direction: column;
+justify-content: space-between; /* Empuja el enlace hacia abajo */
+}
+
+.project-info h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem; /* Tamaño del título del proyecto */
+  font-weight: 600; /* Un poco más de peso para el título */
+  color: var(--color-text); /* Asegura que use el color de texto principal */
+}
+
+.project-info p {
+margin-bottom: 1rem; /* Espacio debajo de la descripción */
+font-size: 0.9rem; /* Tamaño de la descripción */
+line-height: 1.4;
+color: var(--color-text); /* Usa el color de texto principal */
+opacity: 0.8; /* Ligeramente menos opaco que el título */
+flex-grow: 1; /* Permite que el párrafo crezca */
+}
+
+/* Estilo específico para el enlace dentro de la tarjeta, diferente al estilo general de enlaces de sección */
+.project-info a {
+display: inline-block; /* Para que el padding funcione bien */
+padding: 0.5rem 1rem;
+background-color: var(--color-accent); /* Fondo con color de acento */
+color: var(--color-bg); /* Texto con color de fondo para contraste */
+text-decoration: none; /* Sin subrayado */
+border-radius: 4px;
+font-size: 0.85rem;
+font-weight: 600;
+transition: background-color 0.3s ease, filter 0.3s ease;
+align-self: flex-start; /* Alinea el botón a la izquierda */
+border: 1px solid transparent; /* Borde transparente para mantener tamaño en hover/focus */
+}
+
+.project-info a:hover,
+.project-info a:focus-visible {
+filter: brightness(1.2); /* Más brillante al pasar el mouse/foco */
+background-color: var(--color-accent); /* Mantiene el color de acento */
+color: var(--color-bg); /* Mantiene el color de texto */
+outline: none; /* Quita el outline por defecto */
+border: 1px solid var(--color-text); /* Añade un borde sutil en hover/focus */
+}
+
+/* Ajustes responsivos para las tarjetas */
+@media (max-width: 600px) {
+#art .projects-grid {
+  grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+}
+ .project-card img {
+    height: 150px; /* Altura menor en móviles */
+ }
+}
+/* --- FIN DE NUEVOS ESTILOS PARA ART PROJECTS --- */
+
+
+/* --- Estilos para Enlaces Dentro de las Secciones (Generales) --- */
+/* Asegúrate que estos estilos no interfieran con los de .project-info a */
+main section:not(#art) a { /* Aplica a enlaces en secciones EXCEPTO la de arte */
+  color: var(--color-text); /* Usa el color principal del texto del modo actual */
+  text-decoration: underline; /* Mantiene el subrayado por usabilidad */
+  text-decoration-style: dashed; /* Subrayado punteado (opcional) */
+  text-decoration-thickness: 1px; /* Grosor del subrayado (opcional) */
+  text-decoration-color: var(--color-accent); /* Color del subrayado usa el acento */
+  opacity: 0.9; /* Ligeramente atenuado para diferenciar del texto normal */
+  transition: color var(--transition), opacity var(--transition), text-decoration-color var(--transition); /* Transición suave */
+}
+
+main section:not(#art) a:hover,
+main section:not(#art) a:focus-visible { /* Aplica también en foco de teclado */
+  color: var(--color-accent); /* Cambia al color de acento al pasar el ratón/foco */
+  text-decoration-color: var(--color-text); /* Cambia el color del subrayado */
+  opacity: 1; /* Opacidad completa */
+  outline: none; /* Opcional: Quita el outline si el cambio de color es suficiente indicación de foco */
 }
 
 /* Quitar estilos específicos si fueron aplicados a elementos hijos no deseados */
 main section a small {
-    /* Si los enlaces tuvieran <small> dentro, resetear estilos aquí si es necesario */
-    color: inherit; /* Heredar color del enlace padre */
-    opacity: inherit;
+  /* Si los enlaces tuvieran <small> dentro, resetear estilos aquí si es necesario */
+  color: inherit; /* Heredar color del enlace padre */
+  opacity: inherit;
+}
+
+/* Footer */
+footer {
+text-align: center;
+padding: calc(var(--space) * 2);
+margin-top: calc(var(--space) * 2);
+font-size: 0.85rem;
+opacity: 0.7;
+border-top: 1px solid #333;
+width: 100%;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+.nav-links {
+  display: none; position: absolute;
+  top: 100%; left: 0; width: 100%;
+  flex-direction: column; background: rgba(0, 0, 0, 0.98);
+  padding: var(--space); border-top: 1px solid var(--color-text);
+  gap: var(--space); align-items: center;
+ }
+.nav-links.active { display: flex; }
+
+.nav-links a {
+      font-size: 1.1rem; padding: var(--space) 0;
+      width: 100%; text-align: center;
+      padding-left: 0; padding-right: 0;
+  }
+ .nav-links a::after { display: none; }
+
+.mobile-menu-btn { display: block; }
+#inputArea { flex-direction: column; }
+#userInput { margin-bottom: 0.5rem; }
+.send-btn { width: 100%; }
+#modeSelector { display: flex; flex-direction: column; align-items: center; }
+.mode-btn { width: 80%; }
+
+/* Ajustes mobile para tarjetas ya están incluidos en la sección de Art Projects */
+}
+
+/* Typing Animation */
+.typing-cursor::after {
+  content: '▋';
+  animation: blink 1s step-end infinite;
+  margin-left: 2px;
+  color: var(--color-accent);
+  display: inline-block;
+  vertical-align: baseline;
+}
+@keyframes blink {
+  50% { opacity: 0; }
 }
